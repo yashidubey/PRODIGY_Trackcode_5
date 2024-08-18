@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #6dd5ed, #2193b0);
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        #location-form {
+            margin-bottom: 30px;
+        }
+
+        #city-input {
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            width: 60%;
+            max-width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #ff6b6b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #ff4757;
+        }
+
+        #weather-info {
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+
+        #temperature {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        #condition {
+            font-style: italic;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <div id="location-form">
+        <input type="text" id="city-input" placeholder="Enter city name">
+        <button onclick="fetchWeatherByCity()">Get Weather</button>
+    </div>
+    <div id="weather-info">
+        <h2 id="temperature">--°C</h2>
+        <p id="condition">Weather condition</p>
+    </div>
+
+    <script>
+        function fetchWeatherByCity() {
+            const cityName = document.getElementById('city-input').value;
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=YOUR_API_KEY&units=metric`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temperature').innerText = `${data.main.temp}°C`;
+                    document.getElementById('condition').innerText = data.weather[0].description;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
